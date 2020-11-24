@@ -17,10 +17,8 @@ let telephone = document.querySelector('#number');
 let address = document.querySelector('#address');
 let form_btn = document.querySelector('#modal_form_btn');
 
+// append new contacts to this element
 let contact_list_el = document.querySelector('.contact_list');
-
-// list of contacts (array of objects [{}, {}, [}]])
-let contactList = [];
 
 // initial request to fetch contacts from local storage
 myLoad = () => {
@@ -28,7 +26,11 @@ myLoad = () => {
   renderContacts(list);
 };
 
-//_________OPEN CLOSE MODAL_________//
+//___________________________//
+
+//_____OPEN CLOSE MODAL_____//
+
+//___________________________//
 
 // When the user clicks on the add newbutton, open the modal
 open_modal_btn.onclick = () => {
@@ -63,7 +65,7 @@ window.onclick = (event) => {
 
 //___________________________//
 
-// adding contact to the list / localstorage
+// adding contact to localstorage
 form_btn.addEventListener('click', function (e) {
   if (validate_inputs()) {
     let person = createContact();
@@ -77,7 +79,7 @@ form_btn.addEventListener('click', function (e) {
   }
 });
 
-// event listener to remove error message class on input
+// remove error message styling on input
 inputs.forEach((inputEl) => {
   inputEl.addEventListener('input', () =>
     inputEl.parentElement.classList.remove('input_parent')
@@ -119,7 +121,9 @@ createContact = () => {
     last_name.value.charAt(0).toUpperCase() +
     last_name.value.slice(1).toLowerCase().trim();
 
-  newContact['address'] = address.value;
+  newContact['address'] =
+    address.value.charAt(0).toUpperCase() +
+    address.value.slice(1).toLowerCase().trim();
 
   newContact['telephone'] = formatPhoneNumber(telephone.value);
 
@@ -160,18 +164,16 @@ renderContacts = (contacts) => {
   contact_list_el.innerHTML = '';
 
   contacts.forEach((contact) => {
-    const div = document.createElement('li');
+    const div = document.createElement('div');
     div.setAttribute('id', 'accordion');
-    div.innerHTML = `<h4 class="contact-name">${
-      contact.first_name + ' ' + contact.last_name
-    } </h4>
+    div.innerHTML = `
+      <h4 class="contact-name">${contact.first_name + ' ' + contact.last_name} 
+      </h4>
       <div class="contact-info">
-        <p>
-          <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-          <span>${contact.telephone}</span>
-        </p>
-        <p><i class="fa fa-home" aria-hidden="true"></i>${contact.address}</p>
-        <button class="delete">Delete</button>
+        <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+        <span>${contact.telephone}</span>
+        <i class="fa fa-home" aria-hidden="true"></i>${contact.address}
+        <button class="delete_contact">Delete</button>
       </div>
     `;
 
@@ -179,4 +181,24 @@ renderContacts = (contacts) => {
   });
 };
 
-//_________DELETE CONTACT_________//
+//__________________________//
+
+//______DELETE CONTACT______//
+
+//_________________________//
+
+document.addEventListener('click', function (e) {
+  if (e.target && e.target.classList[0] === 'delete_contact') {
+    let nodes = Array.prototype.slice.call(
+      e.target.parentElement.parentElement.parentElement.children
+    );
+    let index = nodes.indexOf(e.target.parentElement.parentElement);
+    deleteItem(index);
+  }
+});
+
+deleteItem = (index) => {
+  let storage_history = JSON.parse(localStorage.getItem('contacts'));
+  storage_history.splice(index, 1);
+  addToLocalStorage(storage_history);
+};
