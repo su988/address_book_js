@@ -1,3 +1,10 @@
+/* success =   */
+
+:root {
+  --success: #00e973;
+  --danger: #b64f58;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,15 +12,67 @@
   font-family: 'Noto Sans TC', sans-serif;
 }
 
+body {
+  background-color: rgb(67, 67, 67);
+}
+
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
+  width: 40%;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #fafafa;
 }
+
+/********************
+  HEADER / NEW BUTTON
+********************/
 
 #header {
   display: flex;
   align-items: center;
+  margin: 20px 0;
+  justify-content: space-around;
+}
+
+#modal_open {
+  padding: 10px 20px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  background-color: var(--success);
+  box-shadow: 5px 5px 5px #ccc;
+}
+
+#modal_open:hover {
+  cursor: pointer;
+}
+
+/********************
+    SEARCH INPUT
+********************/
+
+.search {
+  margin: 20px;
+}
+
+.search i {
+  margin-right: 10px;
+  color: lightgrey;
+}
+
+.search input {
+  padding: 12px;
+  width: 90%;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid lightgrey;
+}
+
+.search input:focus {
+  box-shadow: 5px 5px 5px #ccc;
 }
 
 /********************
@@ -31,7 +90,7 @@
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.879); /* Black w/ opacity */
+  background-color: rgba(0, 0, 0, 0.927); /* Black w/ opacity */
 }
 
 /* Content Box */
@@ -85,18 +144,22 @@
   border-radius: 4px;
 }
 
+#modal_form_btn:hover {
+  background-color: var(--success);
+}
+
 /* dynamically added class for error messages */
 
 .input_parent[data-error] .input {
-  border-color: #c92432;
-  color: #c92432;
+  border-color: var(--danger);
+  color: var(--danger);
   background: #fffafa;
 }
 
 .input_parent[data-error]::after {
   content: attr(data-error);
   font-size: 0.85em;
-  color: #c92432;
+  color: var(--danger);
   display: block;
   margin: 10px 0;
 }
@@ -108,5 +171,48 @@
 }
 
 #modal_form_btn:hover {
+  cursor: pointer;
+}
+
+/********************
+    CONTACT LIST
+********************/
+
+.contact_list {
+  margin: 20px 50px;
+  margin-bottom: 0;
+}
+
+#accordion {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(222, 222, 222);
+}
+
+#accordion h4 {
+  margin-bottom: 10px;
+}
+
+.contact_info p {
+  margin-bottom: 5px;
+}
+
+.contact_info p span {
+  margin-right: 5px;
+}
+
+.delete_contact {
+  float: right;
+  margin-top: -90px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  background-color: var(--danger);
+  color: #fafafa;
+  box-shadow: 5px 5px 5px #ccc;
+}
+
+.delete_contact:hover {
   cursor: pointer;
 }

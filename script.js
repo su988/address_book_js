@@ -20,6 +20,15 @@ let form_btn = document.querySelector('#modal_form_btn');
 // append new contacts to this element
 let contact_list_el = document.querySelector('.contact_list');
 
+// input to search contacts
+let search_input = document.querySelector('#search_input');
+
+//___________________________//
+
+//______ON WINDOW LOAD______//
+
+//__________________________//
+
 // initial request to fetch contacts from local storage
 myLoad = () => {
   let list = JSON.parse(localStorage.getItem('contacts')) || [];
@@ -65,7 +74,7 @@ window.onclick = (event) => {
 
 //___________________________//
 
-// adding contact to localstorage
+// creating and adding contact to localstorage
 form_btn.addEventListener('click', function (e) {
   if (validate_inputs()) {
     let person = createContact();
@@ -132,9 +141,7 @@ createContact = () => {
 
 // function to add contacts to local storage
 addToLocalStorage = (contacts) => {
-  // conver the array to string then store it.
   localStorage.setItem('contacts', JSON.stringify(contacts));
-  // render them to screen
   renderContacts(contacts);
 };
 
@@ -143,7 +150,7 @@ validateTelephone = (number) => {
   let patt = new RegExp(
     /^\+?1?\s*?\(?\d{3}(?:\)|[-|\s])?\s*?\d{3}[-|\s]?\d{4}$/
   );
-  if (number.match(patt) & (number.length === 10)) {
+  if (number.match(patt)) {
     return true;
   } else {
     return false;
@@ -160,6 +167,7 @@ formatPhoneNumber = (phoneNumberString) => {
   return null;
 };
 
+// render contacts on the page
 renderContacts = (contacts) => {
   contact_list_el.innerHTML = '';
 
@@ -167,13 +175,18 @@ renderContacts = (contacts) => {
     const div = document.createElement('div');
     div.setAttribute('id', 'accordion');
     div.innerHTML = `
-      <h4 class="contact-name">${contact.first_name + ' ' + contact.last_name} 
+      <h4 class="contact_name">${contact.first_name + ' ' + contact.last_name} 
       </h4>
-      <div class="contact-info">
-        <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-        <span>${contact.telephone}</span>
-        <i class="fa fa-home" aria-hidden="true"></i>${contact.address}
-        <button class="delete_contact">Delete</button>
+      <div class="contact_info">
+        <p>
+          <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+          <span>${contact.telephone}</span>
+        </p>
+        <p>
+          <span><i class="fa fa-home" aria-hidden="true"></i></span>
+          <span>${contact.address}</span>
+        </p>
+        <button class="delete_contact"><i class="fa fa-trash-o"></i></button>
       </div>
     `;
 
@@ -202,3 +215,17 @@ deleteItem = (index) => {
   storage_history.splice(index, 1);
   addToLocalStorage(storage_history);
 };
+
+//__________________________//
+
+//______SEARCH CONTACT______//
+
+//_________________________//
+
+search_input.addEventListener('input', function (e) {
+  let storage_history = JSON.parse(localStorage.getItem('contacts'));
+  let filtered_list = storage_history.filter((obj) => {
+    return obj.first_name.toLowerCase().includes(e.target.value.toLowerCase());
+  });
+  renderContacts(filtered_list);
+});
