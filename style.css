@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#header {
+  display: flex;
+  align-items: center;
+}
+
+/********************
+    MODAL Layout
+********************/
+
+/* background */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.879); /* Black w/ opacity */
+}
+
+/* Content Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%; /* Could be more or less, depending on screen size */
+}
+
+/* Close Button */
+.modal_close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.modal_close:hover,
+.modal_close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/********************
+    MODAL Content
+********************/
+
+#modal_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal_header {
+  margin-bottom: 30px;
+}
+
+.input_container {
+  margin-bottom: 20px;
+}
+
+.input_container input {
+  display: block;
+  margin-top: 5px;
+  width: 100%;
+  padding: 12px;
+  outline: none;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+}
+
+/* dynamically added class for error messages */
+
+.input_parent[data-error] .input {
+  border-color: #c92432;
+  color: #c92432;
+  background: #fffafa;
+}
+
+.input_parent[data-error]::after {
+  content: attr(data-error);
+  font-size: 0.85em;
+  color: #c92432;
+  display: block;
+  margin: 10px 0;
+}
+
+#modal_form_btn {
+  padding: 12px;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+}
+
+#modal_form_btn:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Address Book</title>
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet"> 
+    
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body onload="myLoad()">
+    <main class="container">
+      
+      <div id="header">
+        <h1>Address Book</h1>
+        <button id="modal_open">New &#43</button>
+      </div>
+
+      <div id="myModal" class="modal">
+        
+        <div class="modal-content">  
+          <div class="modal_header">
+            <span class="modal_close">&times;</span>
+            <h4>Add New Contact</h4>  
+          </div>
+          
+          <div id="modal_form">
+            <div class="input_container" data-error='First name cannot be blank'>
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" class="input" name="firstname" placeholder="First name..">
+            </div>
+            <div class="input_container" data-error='Last name cannot be blank'>
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" class="input" name="lastname" placeholder="Last name..">
+            </div>
+            <div class="input_container" data-error='Incorrect format'>
+              <label for="number">Contact Number</label>
+              <input type="text" id="number" class="input" name="number" placeholder="123-456-7890">
+            </div>
+            <div class="input_container" data-error='Address cannot be blank'>
+              <label for="number">Address</label>
+              <input type="text" id="address" class="input" name="address" placeholder="Address here...">
+            </div>
+            <button id="modal_form_btn">Submit</button>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="search">
+        <input type="text" placeholder="Search" />
+      </div>
+
+      <div class="contact_list">
+        
+      </div>
+        
+    </main>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
