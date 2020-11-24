@@ -30,7 +30,7 @@ let search_input = document.querySelector('#search_input');
 //__________________________//
 
 // initial request to fetch contacts from local storage
-myLoad = () => {
+init = () => {
   let list = JSON.parse(localStorage.getItem('contacts')) || [];
   renderContacts(list);
 };
@@ -202,18 +202,37 @@ renderContacts = (contacts) => {
 
 document.addEventListener('click', function (e) {
   if (e.target && e.target.classList[0] === 'delete_contact') {
-    let nodes = Array.prototype.slice.call(
-      e.target.parentElement.parentElement.parentElement.children
-    );
-    let index = nodes.indexOf(e.target.parentElement.parentElement);
-    deleteItem(index);
+    delButton(e);
+  }
+
+  if (e.target && e.target.classList[1] === 'fa-trash-o') {
+    delIcon(e);
   }
 });
 
+// remove contact from local storage
 deleteItem = (index) => {
   let storage_history = JSON.parse(localStorage.getItem('contacts'));
   storage_history.splice(index, 1);
   addToLocalStorage(storage_history);
+};
+
+// if the user clicks the button part of element
+delButton = (e) => {
+  let nodes = Array.prototype.slice.call(
+    e.target.parentElement.parentElement.parentElement.children
+  );
+  let index = nodes.indexOf(e.target.parentElement.parentElement);
+  deleteItem(index);
+};
+
+// if the user clicks the trash icon part of element
+delIcon = (e) => {
+  let nodes = Array.prototype.slice.call(
+    e.target.parentElement.parentElement.parentElement.parentElement.children
+  );
+  let index = nodes.indexOf(e.target.parentElement.parentElement.parentElement);
+  deleteItem(index);
 };
 
 //__________________________//

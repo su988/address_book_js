@@ -42,12 +42,13 @@ body {
   border-radius: 4px;
   outline: none;
   border: none;
-  background-color: var(--success);
+  background-color: rgb(233, 233, 233);
   box-shadow: 5px 5px 5px #ccc;
 }
 
 #modal_open:hover {
   cursor: pointer;
+  background-color: var(--success);
 }
 
 /********************
@@ -215,4 +216,11 @@ body {
 
 .delete_contact:hover {
   cursor: pointer;
+}
+
+/********************
+    MOBILE VIEW
+********************/
+
+@media only screen and (max-width: 600px) {
 }
