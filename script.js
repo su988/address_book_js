@@ -29,7 +29,7 @@ let search_input = document.querySelector('#search_input');
 
 //__________________________//
 
-// initial request to fetch contacts from local storage
+// fetch data from local storage on load
 init = () => {
   let list = JSON.parse(localStorage.getItem('contacts')) || [];
   renderContacts(list);
@@ -150,7 +150,7 @@ validateTelephone = (number) => {
   let patt = new RegExp(
     /^\+?1?\s*?\(?\d{3}(?:\)|[-|\s])?\s*?\d{3}[-|\s]?\d{4}$/
   );
-  if (number.match(patt)) {
+  if (number.match(patt) && number.length === 10) {
     return true;
   } else {
     return false;
@@ -175,7 +175,9 @@ renderContacts = (contacts) => {
     const div = document.createElement('div');
     div.setAttribute('id', 'accordion');
     div.innerHTML = `
-      <h4 class="contact_name">${contact.first_name + ' ' + contact.last_name} 
+      <h4 class="contact_name"><span><i class="fa fa-user"></i></span>${
+        contact.first_name + ' ' + contact.last_name
+      } 
       </h4>
       <div class="contact_info">
         <p>
