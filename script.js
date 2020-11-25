@@ -50,7 +50,7 @@ open_modal_btn.onclick = () => {
   address.value = '';
 };
 
-// When the user clicks on <span> (x), close the modal
+// When the user clicks on (x), close the modal
 span_close_modal.onclick = () => {
   modal.style.display = 'none';
   inputs.forEach((inpEl) => {
@@ -150,21 +150,17 @@ validateTelephone = (number) => {
   let patt = new RegExp(
     /^\+?1?\s*?\(?\d{3}(?:\)|[-|\s])?\s*?\d{3}[-|\s]?\d{4}$/
   );
-  if (number.match(patt) && number.length === 10) {
-    return true;
-  } else {
-    return false;
-  }
+  return number.match(patt) ? true : false;
 };
 
 // format phone number
 formatPhoneNumber = (phoneNumberString) => {
   let cleaned = ('' + phoneNumberString).replace(/\D/g, '');
-  let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-  if (match) {
-    return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+  let match = cleaned.match(/(^\+?1?)(\d{3})(\d{3})(\d{4})$/);
+  if (match && match[1]) {
+    return '+' + match[1] + ' (' + match[2] + ') ' + match[3] + '-' + match[4];
   }
-  return null;
+  return ' (' + match[2] + ') ' + match[3] + '-' + match[4];
 };
 
 // render contacts on the page
