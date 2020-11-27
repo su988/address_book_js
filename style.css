@@ -207,9 +207,12 @@ body {
   margin-right: 5px;
 }
 
+.fa {
+  color: var(--grey);
+}
+
 .ctrl_btn {
   float: right;
-
   border-radius: 4px;
   outline: none;
   border: none;
@@ -225,19 +228,14 @@ body {
 
 .edit_contact {
   margin-top: -45px;
-  background-color: rgb(162, 162, 162);
+  background-color: rgb(165, 165, 165);
   padding: 4px 6px;
 }
 
 .ctrl_btn:hover {
   cursor: pointer;
 }
-
-.fa {
-  color: var(--grey);
-}
-
-.ctrl_btn i {
+.ctrl_btn .fa {
   color: white;
 }
 

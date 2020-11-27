@@ -93,7 +93,6 @@ document.addEventListener('click', function (e) {
       addToLocalStorage(storage_history);
       form_btn.classList.remove('submit_btn');
       modal.style.display = 'none';
-      console.log(form_btn.classList);
     } else {
       console.log('rejected');
     }
