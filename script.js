@@ -23,6 +23,8 @@ let contact_list_el = document.querySelector('.contact_list');
 // input to search contacts
 let search_input = document.querySelector('#search_input');
 
+let index;
+
 //___________________________//
 
 //______ON WINDOW LOAD______//
@@ -44,6 +46,7 @@ init = () => {
 // When the user clicks on the add newbutton, open the modal
 open_modal_btn.onclick = () => {
   modal.style.display = 'block';
+  form_btn.classList.add('submit_btn');
   first_name.value = '';
   last_name.value = '';
   number.value = '';
@@ -53,6 +56,8 @@ open_modal_btn.onclick = () => {
 // When the user clicks on (x), close the modal
 span_close_modal.onclick = () => {
   modal.style.display = 'none';
+  form_btn.classList.remove('submit_btn');
+  form_btn.classList.remove('edit_btn');
   inputs.forEach((inpEl) => {
     inpEl.parentElement.classList.remove('input_parent');
   });
@@ -62,6 +67,8 @@ span_close_modal.onclick = () => {
 window.onclick = (event) => {
   if (event.target === modal) {
     modal.style.display = 'none';
+    form_btn.classList.remove('submit_btn');
+    form_btn.classList.remove('edit_btn');
     inputs.forEach((inpEl) => {
       inpEl.parentElement.classList.remove('input_parent');
     });
@@ -75,16 +82,21 @@ window.onclick = (event) => {
 //___________________________//
 
 // creating and adding contact to localstorage
-form_btn.addEventListener('click', function (e) {
-  if (validate_inputs()) {
-    let person = createContact();
-    let storage_history = JSON.parse(localStorage.getItem('contacts')) || [];
-    storage_history.push(person);
+document.addEventListener('click', function (e) {
+  if (e.target && e.target.classList[0] === 'submit_btn') {
+    if (validate_inputs()) {
+      let person = createContact({});
 
-    addToLocalStorage(storage_history);
-    modal.style.display = 'none';
-  } else {
-    console.log('rejected');
+      let storage_history = JSON.parse(localStorage.getItem('contacts')) || [];
+      storage_history.push(person);
+
+      addToLocalStorage(storage_history);
+      form_btn.classList.remove('submit_btn');
+      modal.style.display = 'none';
+      console.log(form_btn.classList);
+    } else {
+      console.log('rejected');
+    }
   }
 });
 
@@ -119,9 +131,7 @@ validate_inputs = () => {
 };
 
 // create contact object
-createContact = () => {
-  let newContact = {};
-
+createContact = (newContact) => {
   newContact['first_name'] =
     first_name.value.charAt(0).toUpperCase() +
     first_name.value.slice(1).toLowerCase().trim();
@@ -184,7 +194,8 @@ renderContacts = (contacts) => {
           <span><i class="fa fa-home" aria-hidden="true"></i></span>
           <span>${contact.address}</span>
         </p>
-        <button class="delete_contact"><i class="fa fa-trash-o"></i></button>
+        <button class="ctrl_btn delete_contact"><i class="fa fa-trash-o"></i></button>
+        <button class="ctrl_btn edit_contact"><i class="fa fa-edit"></i></i></button>
       </div>
     `;
 
@@ -199,7 +210,7 @@ renderContacts = (contacts) => {
 //_________________________//
 
 document.addEventListener('click', function (e) {
-  if (e.target && e.target.classList[0] === 'delete_contact') {
+  if (e.target && e.target.classList[1] === 'delete_contact') {
     delButton(e);
   }
 
@@ -217,22 +228,31 @@ deleteItem = (index) => {
 
 // if the user clicks the button part of element
 delButton = (e) => {
+  deleteItem(getIndexButton(e));
+};
+
+// if the user clicks the icon part of element
+delIcon = (e) => {
+  deleteItem(index);
+};
+
+// get selected object index in array when user cliks <button>
+getIndexButton = (e) => {
   let nodes = Array.prototype.slice.call(
     e.target.parentElement.parentElement.parentElement.children
   );
   let index = nodes.indexOf(e.target.parentElement.parentElement);
-  deleteItem(index);
+  return index;
 };
 
-// if the user clicks the trash icon part of element
-delIcon = (e) => {
+// get selected object index in array when user cliks icon part
+getIndexIcon = (e) => {
   let nodes = Array.prototype.slice.call(
     e.target.parentElement.parentElement.parentElement.parentElement.children
   );
   let index = nodes.indexOf(e.target.parentElement.parentElement.parentElement);
-  deleteItem(index);
+  return index;
 };
-
 //__________________________//
 
 //______SEARCH CONTACT______//
@@ -246,3 +266,55 @@ search_input.addEventListener('input', function (e) {
   });
   renderContacts(filtered_list);
 });
+
+//__________________________//
+
+//______EDIT CONTACT______//
+
+//_________________________//
+
+// when the user clicks edit contact button
+document.addEventListener('click', function (e) {
+  if (e.target && e.target.classList[1] === 'edit_contact') {
+    index = getIndexButton(e);
+    editSelectedContact(index);
+  }
+
+  if (e.target && e.target.classList[1] === 'fa-edit') {
+    index = getIndexIcon(e);
+    editSelectedContact(index);
+  }
+});
+
+// get selected contact object
+editSelectedContact = (index) => {
+  storage_history = JSON.parse(localStorage.getItem('contacts'));
+  setInputValues(storage_history[index]);
+  modal.style.display = 'block';
+  form_btn.classList.add('edit_btn');
+};
+
+// when the user submits form for edit
+document.addEventListener('click', function (e) {
+  if (e.target && e.target.classList[0] === 'edit_btn') {
+    storage_history = JSON.parse(localStorage.getItem('contacts'));
+
+    if (validate_inputs()) {
+      createContact(storage_history[index]);
+      addToLocalStorage(storage_history);
+
+      form_btn.classList.remove('edit_btn');
+      modal.style.display = 'none';
+    } else {
+      console.log('reject edits');
+    }
+  }
+});
+
+// when user clicks edit modal opens with input values filled
+setInputValues = (obj) => {
+  first_name.value = obj.first_name;
+  last_name.value = obj.last_name;
+  telephone.value = obj.telephone;
+  address.value = obj.address;
+};

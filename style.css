@@ -207,24 +207,38 @@ body {
   margin-right: 5px;
 }
 
-.delete_contact {
+.ctrl_btn {
   float: right;
-  margin-top: -90px;
-  padding: 6px 14px;
+
   border-radius: 4px;
   outline: none;
   border: none;
-  background-color: var(--danger);
-  color: #fafafa;
   box-shadow: 5px 5px 5px #ccc;
 }
 
-.delete_contact:hover {
+.delete_contact {
+  margin-top: -85px;
+  padding: 4px 8px;
+  background-color: var(--danger);
+  color: #fafafa;
+}
+
+.edit_contact {
+  margin-top: -45px;
+  background-color: rgb(162, 162, 162);
+  padding: 4px 6px;
+}
+
+.ctrl_btn:hover {
   cursor: pointer;
 }
 
 .fa {
   color: var(--grey);
+}
+
+.ctrl_btn i {
+  color: white;
 }
 
 /********************
